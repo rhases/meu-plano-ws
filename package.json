@@ -1,5 +1,5 @@
 {
-  "name": "scheduler-ws",
+  "name": "ans-ws",
   "version": "0.0.1",
   "main": "server/app.js",
   "dependencies": {
