@@ -1,18 +1,18 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/health-insurance/Procedures              ->  index
- * POST    /api/health-insurance/Procedures              ->  create
- * GET     /api/health-insurance/Procedures/:id          ->  show
- * PUT     /api/health-insurance/Procedures/:id          ->  update
- * DELETE  /api/health-insurance/Procedures/:id          ->  destroy
+ * GET     /api/health-insurance/Operators              ->  index
+ * POST    /api/health-insurance/Operators              ->  create
+ * GET     /api/health-insurance/Operators/:id          ->  show
+ * PUT     /api/health-insurance/Operators/:id          ->  update
+ * DELETE  /api/health-insurance/Operators/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-import Procedure from './Procedure.model';
+import Operator from './operator.model';
 
-var logger = require('log4js').getLogger('controller.Procedure');
+var logger = require('log4js').getLogger('controller.operator');
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -70,36 +70,36 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
-// Gets a single Procedure from the DB
+// Gets a single Operator from the DB
 export function show(req, res) {
-  return Procedure.findById(req.params.id).populate('healthPlans').exec()
+  return Operator.findById(req.params.id).populate('healthPlans').exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Procedure in the DB
+// Creates a new Operator in the DB
 export function create(req, res) {
-  return Procedure.create(req.body)
+  return Operator.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Procedure in the DB
+// Updates an existing Operator in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  return Procedure.findById(req.params.id).exec()
+  return Operator.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Procedure from the DB
+// Deletes a Operator from the DB
 export function destroy(req, res) {
-  return Procedure.findById(req.params.id).exec()
+  return Operator.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
@@ -107,16 +107,16 @@ export function destroy(req, res) {
 
 
 export function findByName(req, res, next) {
-	prepareQueryProcedureByName(req.params.Procedure_name.replace(/-/g, ' ')).exec()
+	prepareQueryOperatorByName(req.params.Operator_name.replace(/-/g, ' ')).exec()
 	.then(respondWithResult(res))
 	.catch(handleError(res))
 	.done();
 }
 
-function prepareQueryProcedureByName(name) {
-	logger.trace("Finding Procedure by name... " + name);
+function prepareQueryOperatorByName(name) {
+	logger.trace("Finding Operator by name... " + name);
 
-	return Procedure.findOne({'name': new RegExp('^'+name+'$', "i") })
+	return Operator.findOne({'name': new RegExp('^'+name+'$', "i") })
 		.populate({
 			'path': 'healthPlans',
 			'populate': { path: 'planTables' }

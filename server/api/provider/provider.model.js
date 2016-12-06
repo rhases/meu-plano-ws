@@ -2,7 +2,6 @@
 
 import mongoose from 'mongoose';
 import * as medicalInfos from 'medical-specializations';
-import * as schedulerInfos from 'scheduler-utils';
 
 var AddressSchema = new mongoose.Schema({
 	label: { type: String, required: true },
