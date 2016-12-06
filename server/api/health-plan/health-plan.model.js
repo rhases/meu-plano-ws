@@ -4,14 +4,13 @@ import mongoose from 'mongoose';
 import _ from 'lodash';
 
 import Q from 'q';
-import StateSchema from '../state.schema';
 
 var HealthPlanSchema = new mongoose.Schema({
 	_id: { type: Number, required: true }, //ANS Cod
 	name: { type: String, required: true },
 	status: String, /*Comercializacao: suspensa, ativa com comercialização suspensa, liberada*/
 
-	operator:  { type: mongoose.Schema.Types.Number, ref: 'Operator' },
+	Procedure:  { type: mongoose.Schema.Types.Number, ref: 'Procedure' },
 
 	coverageTypes: [String], /*ambulatorial, hospitalar, odonto ... TODO: enum*/
 	accomodation:String, /*s/acomodacao, coletivo, indiv */
@@ -46,13 +45,13 @@ HealthPlanSchema.methods.populate = function() {
 	var deferred = Q.defer();
 	var healthPlan = this;
 
-	if (healthPlan.operator._id) {
+	if (healthPlan.Procedure._id) {
 		deferred.resolve(healthPlan);
 	} else {
-		mongoose.model('Operator').findById(healthPlan.operator).exec()
-			.then(function(operator) {
-				if (operator && operator != null)
-					healthPlan.operator = operator;
+		mongoose.model('Procedure').findById(healthPlan.Procedure).exec()
+			.then(function(Procedure) {
+				if (Procedure && Procedure != null)
+					healthPlan.Procedure = Procedure;
 
 				deferred.resolve(healthPlan);
 			})

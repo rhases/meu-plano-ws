@@ -52,7 +52,7 @@ describe('HealthPlan API:', function() {
     });
 
     it('should respond with the requested healthPlan', function() {
-	  healthPlan.operator.name.should.equal('Amil');
+	  healthPlan.Procedure.name.should.equal('Amil');
       healthPlan.name.should.equal('400');
     });
 

@@ -2,9 +2,9 @@
 
 var proxyquire = require('proxyquire').noPreserveCache();
 
-var operatorCtrlStub = {
-  index: 'operatorCtrl.index',
-  show: 'operatorCtrl.show',
+var ProcedureCtrlStub = {
+  index: 'ProcedureCtrl.index',
+  show: 'ProcedureCtrl.show',
 };
 
 var routerStub = {
@@ -12,36 +12,36 @@ var routerStub = {
 };
 
 // require the index with our stubbed out modules
-var operatorIndex = proxyquire('./index.js', {
+var ProcedureIndex = proxyquire('./index.js', {
   'express': {
     Router: function() {
       return routerStub;
     }
   },
-  './operator.controller': operatorCtrlStub
+  './Procedure.controller': ProcedureCtrlStub
 });
 
-describe('Operator API Router:', function() {
+describe('Procedure API Router:', function() {
 
   it('should return an express router instance', function() {
-    operatorIndex.should.equal(routerStub);
+    ProcedureIndex.should.equal(routerStub);
   });
 
-  describe('GET /api/health-insurance/operators', function() {
+  describe('GET /api/health-insurance/Procedures', function() {
 
-    it('should route to operator.controller.index', function() {
+    it('should route to Procedure.controller.index', function() {
       routerStub.get
-        .withArgs('/', 'operatorCtrl.index')
+        .withArgs('/', 'ProcedureCtrl.index')
         .should.have.been.calledOnce;
     });
 
   });
 
-  describe('GET /api/health-insurance/operators/:id', function() {
+  describe('GET /api/health-insurance/Procedures/:id', function() {
 
-    it('should route to operator.controller.show', function() {
+    it('should route to Procedure.controller.show', function() {
       routerStub.get
-        .withArgs('/:id', 'operatorCtrl.show')
+        .withArgs('/:id', 'ProcedureCtrl.show')
         .should.have.been.calledOnce;
     });
 

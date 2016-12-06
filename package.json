@@ -38,7 +38,7 @@
     "passport-local": "^1.0.0",
     "q": "1.4.1",
     "request": "^2.72.0",
-    "scheduler-utils": "git+https://bitbucket.org/rhases/scheduler-utils.git",
+    "ans-utils": "git+https://bitbucket.org/rhases/scheduler-utils.git",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {

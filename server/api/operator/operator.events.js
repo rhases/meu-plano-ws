@@ -1,15 +1,15 @@
 /**
- * Operator model events
+ * Procedure model events
  */
 
 'use strict';
 
 import {EventEmitter} from 'events';
-var Operator = require('./operator.model');
-var OperatorEvents = new EventEmitter();
+var Procedure = require('./Procedure.model');
+var ProcedureEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
-OperatorEvents.setMaxListeners(0);
+ProcedureEvents.setMaxListeners(0);
 
 // Model events
 var events = {
@@ -20,14 +20,14 @@ var events = {
 // Register the event emitter to the model events
 for (var e in events) {
   var event = events[e];
-  Operator.schema.post(e, emitEvent(event));
+  Procedure.schema.post(e, emitEvent(event));
 }
 
 function emitEvent(event) {
   return function(doc) {
-    OperatorEvents.emit(event + ':' + doc._id, doc);
-    OperatorEvents.emit(event, doc);
+    ProcedureEvents.emit(event + ':' + doc._id, doc);
+    ProcedureEvents.emit(event, doc);
   }
 }
 
-export default OperatorEvents;
+export default ProcedureEvents;

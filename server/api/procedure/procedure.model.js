@@ -8,7 +8,7 @@ var ProcedureSchema = new mongoose.Schema({
 	_id: { type: String, required: true }, //ANS Cod
 	mainDescription:String,
 	coverageTypes:[], // ondonto, ambul, apac, obst TODO: enum*/
-	descriptions:[], // usado para buscar
+	descriptions:[ { type: String } ], // usado para buscar
 }, { timestamps: true });
 
 export default mongoose.model('Procedure', ProcedureSchema);

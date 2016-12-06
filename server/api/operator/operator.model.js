@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 import _ from 'lodash';
 
-var OperatorSchema = new mongoose.Schema({
+var ProcedureSchema = new mongoose.Schema({
 	_id: { type: Number, required: true }, //ANS Cod
 	name: { type: String, required: true },
 	image: String, // link to a image of this plan
@@ -18,7 +18,7 @@ var OperatorSchema = new mongoose.Schema({
  * Methods
  */
 
-OperatorSchema.methods.merge = function(updates) {
+ProcedureSchema.methods.merge = function(updates) {
     var updated = _.merge(this, updates);
 
 	// List workaround (without it the list is not updated)
@@ -28,4 +28,4 @@ OperatorSchema.methods.merge = function(updates) {
 	return updated;
 }
 
-export default mongoose.model('Operator', OperatorSchema);
+export default mongoose.model('Procedure', ProcedureSchema);

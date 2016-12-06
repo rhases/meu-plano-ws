@@ -22,7 +22,7 @@ var ProviderSchema = new mongoose.Schema({
 	address:  AddressSchema,
 	phone:  { type: String, required: true },
 	rate: Number,
-	operators: [{ type: mongoose.Schema.Types.Number, ref: 'Operator' }],
+	Procedures: [{ type: mongoose.Schema.Types.Number, ref: 'Procedure' }],
 	healthPlans: [{
 		services: [{type: String}], /*H, M, PS, A*/
 		medicalSpecialties:[], //consultas médicas

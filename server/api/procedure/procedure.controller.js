@@ -1,18 +1,18 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/health-insurance/Procedures              ->  index
- * POST    /api/health-insurance/Procedures              ->  create
- * GET     /api/health-insurance/Procedures/:id          ->  show
- * PUT     /api/health-insurance/Procedures/:id          ->  update
- * DELETE  /api/health-insurance/Procedures/:id          ->  destroy
+ * GET     /api/health-insurance/procedures              ->  index
+ * POST    /api/health-insurance/procedures              ->  create
+ * GET     /api/health-insurance/procedures/:id          ->  show
+ * PUT     /api/health-insurance/procedures/:id          ->  update
+ * DELETE  /api/health-insurance/procedures/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-import Procedure from './Procedure.model';
+import Procedure from './procedure.model';
 
-var logger = require('log4js').getLogger('controller.Procedure');
+var logger = require('log4js').getLogger('controller.procedure');
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -107,14 +107,14 @@ export function destroy(req, res) {
 
 
 export function findByName(req, res, next) {
-	prepareQueryProcedureByName(req.params.Procedure_name.replace(/-/g, ' ')).exec()
+	prepareQueryProcedureByName(req.params.procedure_name.replace(/-/g, ' ')).exec()
 	.then(respondWithResult(res))
 	.catch(handleError(res))
 	.done();
 }
 
 function prepareQueryProcedureByName(name) {
-	logger.trace("Finding Procedure by name... " + name);
+	logger.trace("Finding procedure by name... " + name);
 
 	return Procedure.findOne({'name': new RegExp('^'+name+'$', "i") })
 		.populate({

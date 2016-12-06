@@ -12,7 +12,7 @@ var UserProfileSchema = new mongoose.Schema({
 	name: { type: String },
 	hasHealthPlan: { type: Boolean },
 	healthPlan: {
-		// operator: { type: String, trim: true, lowercase: true }, //, enum: ['amil', 'bradesco', 'central-nacional-unimed', 'saudesim', 'seguros-unimed', 'sulamerica']
+		// Procedure: { type: String, trim: true, lowercase: true }, //, enum: ['amil', 'bradesco', 'central-nacional-unimed', 'saudesim', 'seguros-unimed', 'sulamerica']
 		name: { type: String },
 		number: { type: String },
 	}

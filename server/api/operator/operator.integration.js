@@ -5,54 +5,54 @@ import request from 'supertest';
 
 var _id = 'amil';
 
-describe('Operator API:', function() {
+describe('Procedure API:', function() {
 
-  describe('GET /api/health-insurance/operators', function() {
-    var operators;
+  describe('GET /api/health-insurance/Procedures', function() {
+    var Procedures;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/health-insurance/operators')
+        .get('/api/health-insurance/Procedures')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          operators = res.body;
+          Procedures = res.body;
           done();
         });
     });
 
     it('should respond with JSON array', function() {
-      operators.should.be.instanceOf(Array);
+      Procedures.should.be.instanceOf(Array);
     });
 
   });
 
-  describe('GET /api/health-insurance/operators/:id', function() {
-    var operator;
+  describe('GET /api/health-insurance/Procedures/:id', function() {
+    var Procedure;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/health-insurance/operators/' + _id)
+        .get('/api/health-insurance/Procedures/' + _id)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          operator = res.body;
+          Procedure = res.body;
           done();
         });
     });
 
     afterEach(function() {
-      operator = {};
+      Procedure = {};
     });
 
-    it('should respond with the requested operator', function() {
-      operator.name.should.equal('Amil');
+    it('should respond with the requested Procedure', function() {
+      Procedure.name.should.equal('Amil');
     });
 
   });

@@ -10,13 +10,11 @@ import config from './config/environment';
 
 export default function(app) {
     // Insert routes below
-    app.use('/api/doctors', require('./api/doctor'));
-    app.use('/api/providers', require('./api/provider'));
+    app.use('/api/health-plan', require('./api/health-plan'));
+    app.use('/api/Procedure', require('./api/Procedure'));
+    app.use('/api/procedure', require('./api/procedure'));
+    app.use('/api/provider', require('./api/provider'));
     app.use('/api/user-profiles', require('./api/user-profile'));
-    app.use('/api/appointments', require('./api/appointment'));
-    app.use('/api/appointment-requests', require('./api/appointment-request'));
-    app.use('/api/invites', require('./api/invite'));
-
     // All other routes should redirect to the index.html
     //app.route('/*').get(errors[404]);
 }
