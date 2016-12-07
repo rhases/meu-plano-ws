@@ -12,7 +12,7 @@ pipelines:
           - npm install
           - npm install -g grunt-cli
           - grunt test
-          
+
   branches:
     master:
       - step:
@@ -20,11 +20,11 @@ pipelines:
             # Installation
             - npm install
             - npm install -g grunt-cli
-            # Testing
-            - mkdir -p "/data/db/"
-            - mongod &
-            - sleep 150
-            - grunt test
+            # TODO Testing
+            #- mkdir -p "/data/db/"
+            #- mongod &
+            #- sleep 150
+            #- grunt test
             # Preparing Build
             - APP_NAME="$HEROKUAPP_BASENAME"
             - mkdir -p ~/.ssh
