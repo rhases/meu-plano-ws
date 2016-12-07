@@ -10,7 +10,7 @@ var HealthPlanSchema = new mongoose.Schema({
 	name: { type: String, required: true },
 	status: String, /*Comercializacao: suspensa, ativa com comercialização suspensa, liberada*/
 
-	Procedure:  { type: mongoose.Schema.Types.Number, ref: 'Procedure' },
+	operator:  { type: mongoose.Schema.Types.Number, ref: 'Operator' },
 
 	coverageTypes: [String], /*ambulatorial, hospitalar, odonto ... TODO: enum*/
 	accomodation:String, /*s/acomodacao, coletivo, indiv */
@@ -45,13 +45,13 @@ HealthPlanSchema.methods.populate = function() {
 	var deferred = Q.defer();
 	var healthPlan = this;
 
-	if (healthPlan.Procedure._id) {
+	if (healthPlan.Operator._id) {
 		deferred.resolve(healthPlan);
 	} else {
-		mongoose.model('Procedure').findById(healthPlan.Procedure).exec()
+		mongoose.model('operator').findById(healthPlan.Operator).exec()
 			.then(function(Procedure) {
-				if (Procedure && Procedure != null)
-					healthPlan.Procedure = Procedure;
+				if (Operator && Operator != null)
+					healthPlan.Operator = Operator;
 
 				deferred.resolve(healthPlan);
 			})

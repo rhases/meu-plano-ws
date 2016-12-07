@@ -63,16 +63,16 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Procedures
+// Gets a list of Operators
 export function index(req, res) {
-  return Procedure.find().populate('healthPlans').exec()
+  return Operator.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 // Gets a single Operator from the DB
 export function show(req, res) {
-  return Operator.findById(req.params.id).populate('healthPlans').exec()
+  return Operator.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));

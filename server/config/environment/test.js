@@ -5,10 +5,10 @@
 module.exports = {
 	// MongoDB connection options
 	mongo: {
-		uri: 'mongodb://localhost/scheduler-ws-test'
+		uri: 'mongodb://localhost/ans-ws-test'
 	},
 	seedDB: true,
-	
+
 	byPassAuthenticator: true
 
 };

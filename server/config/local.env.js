@@ -9,5 +9,7 @@ module.exports = {
 	GCM_API_KEY: 'AIzaSyBfjfTXOKrYLOuIfhHmGmIUEnewLUTjvCU',
 
 	// Control debug level for modules using visionmedia/debug
-	DEBUG: ''
+	DEBUG: '',
+
+	MONGODB_URI: 'mongodb://localhost/ans-ws-dev'
 };

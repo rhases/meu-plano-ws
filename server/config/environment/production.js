@@ -19,8 +19,7 @@ module.exports = {
 					process.env.MONGOLAB_URI ||
 	      process.env.MONGOHQ_URL ||
 	      process.env.OPENSHIFT_MONGODB_DB_URL +
-	      process.env.OPENSHIFT_APP_NAME ||
-	      'mongodb://localhost/oauth'
+	      process.env.OPENSHIFT_APP_NAME
 	},
 	// MailChimp Integration
 	mailChimp: {

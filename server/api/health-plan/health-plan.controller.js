@@ -11,7 +11,6 @@
 
 import _ from 'lodash';
 import HealthPlan from './health-plan.model';
-import Procedure from './health-plan.model';
 
 var logger = require('log4js').getLogger('controller.health-plan');
 
@@ -83,16 +82,14 @@ function isEnabled(res) {
 
 // Gets a list of HealthPlans
 export function index(req, res) {
-  return HealthPlan.find().populate('Procedure').populate('planTables').exec()
-    .then(isEnabledArrayType(res))
+  return HealthPlan.find().populate('operator').exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 // Gets a single HealthPlan from the DB
 export function show(req, res) {
-  return HealthPlan.findById(req.params.id).populate('Procedure').populate('planTables').exec()
-    .then(isEnabled(res))
+  return HealthPlan.findById(req.params.id).populate('operator').exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -174,7 +171,7 @@ function prepareQueryByCityStateAndTag(params) {
 			match: preparePlanTableQuery(params)
 		}
 	)
-	.populate('Procedure');
+	.populate('Operator');
 }
 
 function preparePlanTableQuery(params) {

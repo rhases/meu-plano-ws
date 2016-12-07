@@ -6,7 +6,7 @@ module.exports = {
 
 	// MongoDB connection options
 	mongo: {
-		uri: 'mongodb://localhost/scheduler-ws-dev'
+		uri: 'mongodb://localhost/ans-ws-dev'
 	},
 
 	port: 9002,

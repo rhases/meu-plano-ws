@@ -6,7 +6,7 @@ var controller = require('./health-plan.controller');
 var router = express.Router();
 
 router.get('/', controller.index);
-router.use('/all-cities', require('./all-cities'));
+//router.use('/all-cities', require('./all-cities'));
 router.get('/:id', controller.show);
 //router.post('/', controller.create);
 //router.put('/:id', controller.update);
