@@ -12,6 +12,7 @@ pipelines:
           - npm install
           - npm install -g grunt-cli
           - grunt test
+          
   branches:
     master:
       - step:
