@@ -1,0 +1,46 @@
+# This is a sample build configuration for Javascript.
+# Check our guides at https://confluence.atlassian.com/x/VYk8Lw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: godofcontainers/node-mongodb:6.2.0
+
+pipelines:
+  default:
+    - step:
+        script: # Modify the commands below to build your repository.
+          - npm install
+          - npm install -g grunt-cli
+          - grunt test
+  branches:
+    master:
+      - step:
+          script:
+            # Installation
+            - npm install
+            - npm install -g grunt-cli
+            # Testing
+            - mkdir -p "/data/db/"
+            - mongod &
+            - sleep 150
+            - grunt test
+            # Preparing Build
+            - APP_NAME="$HEROKUAPP_BASENAME"
+            - mkdir -p ~/.ssh
+            - ssh-keyscan heroku.com >> ~/.ssh/known_hosts
+            - touch ~/.ssh/id_rsa
+            - echo "$PRK" > ~/.ssh/id_rsa
+            - cat ~/.ssh/id_rsa
+            - sed -i -e 's/ @@ /\n/g' ~/.ssh/id_rsa
+            - cat ~/.ssh/id_rsa
+            - chmod 600 ~/.ssh/id_rsa
+            - git config --global user.name "$USER"
+            - git config --global user.email "$USER"
+            - rm -rf dist
+            - mkdir dist/
+            - cd dist
+            - git clone git@heroku.com:$APP_NAME.git -o heroku ./
+            # Build
+            - grunt build
+            # Deploy
+            - grunt buildcontrol:heroku
