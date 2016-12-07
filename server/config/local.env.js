@@ -11,5 +11,6 @@ module.exports = {
 	// Control debug level for modules using visionmedia/debug
 	DEBUG: '',
 
-	MONGODB_URI: 'mongodb://localhost/ans-ws-dev'
+	//MONGODB_URI: 'mongodb://localhost/ans-ws-dev'
+	MONGODB_URI: 'mongodb://heroku_0jwz32f2:t60kjq7pq5noj00fjm0atcel0q@ds127878.mlab.com:27878/heroku_0jwz32f2'
 };

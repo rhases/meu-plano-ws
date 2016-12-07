@@ -1,7 +1,6 @@
 'use strict';
 
 import mongoose from 'mongoose';
-import * as medicalInfos from 'medical-specializations';
 
 var AddressSchema = new mongoose.Schema({
 	label: { type: String, required: true },
@@ -17,11 +16,12 @@ var AddressSchema = new mongoose.Schema({
 var ProviderSchema = new mongoose.Schema({
 	_id: {type:Number}, // cnes
 	name: { type: String, required: true },
+	type: { type: String, required: true },
 	image: { type: String }, // link to a image
 	address:  AddressSchema,
 	phone:  { type: String, required: true },
 	rate: Number,
-	Procedures: [{ type: mongoose.Schema.Types.Number, ref: 'Procedure' }],
+	procedures: [{ type: mongoose.Schema.Types.Number, ref: 'Procedure' }],
 	healthPlans: [{
 		services: [{type: String}], /*H, M, PS, A*/
 		medicalSpecialties:[], //consultas médicas

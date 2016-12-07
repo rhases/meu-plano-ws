@@ -64,7 +64,6 @@ function handleError(res, statusCode) {
 // Gets a list of Providers
 export function index(req, res) {
   return Provider.find()
-    .populate('doctors')
     .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -73,7 +72,6 @@ export function index(req, res) {
 // Gets a single Provider from the DB
 export function show(req, res) {
   return Provider.findById(req.params.id)
-    .populate('doctors')
     .exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
@@ -109,30 +107,27 @@ export function destroy(req, res) {
 
 
 export function findByParams(req, res, next) {
-	prepareQuery(req.params)
+	return prepareQuery(req.params)
+	.exec()
 	.then(respondWithResult(res))
-	.catch(handleError(res))
-	.done();
+	.catch(handleError(res));
 }
 
 function prepareQuery(params, handler) {
 	var match = {};
-
-  logger.debug('preparing query for ' + JSON.stringify(params));
-
-  if (params.area && params.area !== 'all') {
-    match['address.area'] =  { $eq : params.area};
-  }
-
-	if (params.speciality && params.speciality !== 'all') {
-		match['doctors'] =  { "$elemMatch" : { "speciality" : params.speciality} };
+	if (params.state) {
+		match['address.state'] = params.state;
 	}
-
-	if (params.plan && params.plan !== 'all') {
-		match['plans'] = { $in: [ params.plan ] };
+	if (params.city) {
+		match['address.city'] = params.city;
+	}
+	if (params.type) {
+		match['type'] = params.type;
+	}
+	if (params.plan) {
+		match['healthPlans'] = { $elemMatch: {"plan": params.plan } };
 	}
 
 	logger.trace("The match is " + JSON.stringify(match));
-
 	return Provider.find(match);
 }
