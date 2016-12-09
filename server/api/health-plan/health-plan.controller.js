@@ -123,7 +123,7 @@ export function destroy(req, res) {
 }
 
 
-export function findByCityStateAndTag(req, res, next) {
+export function findByCityStateAndOperator(req, res, next) {
 	logger.debug("Finding health plans... " + JSON.stringify(req.params));
 
 	prepareQueryByCityStateAndTag(req.params).exec()
