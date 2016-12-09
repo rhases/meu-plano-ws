@@ -13,7 +13,7 @@ var AddressSchema = new mongoose.Schema({
 	phones: [{ type: String, trim: true }],
 }, { _id: false });
 
-var ProviderSchema = new mongoose.Schema({
+var HealthProviderSchema = new mongoose.Schema({
 	_id: {type:Number}, // cnes
 	name: { type: String, required: true },
 	type: { type: String, required: true },
@@ -29,6 +29,6 @@ var ProviderSchema = new mongoose.Schema({
 		plan: { type: mongoose.Schema.Types.Number, ref: 'HealthPlan' }
 	}],
 
-},{ autoIndex: true, toObject: { virtuals: true }, toJSON: { virtuals: true }});
+}, { autoIndex: true, toObject: { virtuals: true }, toJSON: { virtuals: true }});
 
-export default mongoose.model('Provider', ProviderSchema);
+export default mongoose.model('HealthProvider', HealthProviderSchema);
