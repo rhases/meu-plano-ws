@@ -138,7 +138,12 @@ function prepareQueryByCityStateAndTag(params) {
 	if (!params.state)
 		return;
 
-    return HealthPlan.find({
+	var match = {};
+
+	if (params.operator)
+		match['operator'] = params.operator;
+
+    return HealthPlan.find(_.merge(match, {
 		"$or": [
 			{ "restrictions.geographic": { "$exists": false } },
 			{
@@ -164,34 +169,10 @@ function prepareQueryByCityStateAndTag(params) {
 				}
 		    }
 		]
-	})
-	.populate (
-		{
-			path: 'planTables',
-			match: preparePlanTableQuery(params)
-		}
-	)
-	.populate('Operator');
+	}))
+	.populate('operator');
 }
 
-function preparePlanTableQuery(params) {
-	var match = {};
-
-	// var totalLifes = calculateTotalLifes(params.lifes);
-	// if(totalLifes > 0) {
-	// 	match["requirements.minLifes"] = { $lte: totalLifes };
-	// 	match["requirements.maxLifes"] = { $gte: totalLifes };
-	// }
-
-	if(params.tags) {
-		var tags = params.tags.replace(/-/g, ' ').split(',');
-		if(tags && tags != "undefined") {
-			match["requirements.tags"] = { $in: tags };
-		}
-	}
-
-	return match;
-}
 
 function calculateTotalLifes(lifes) {
 	var totalLifes = 0;
