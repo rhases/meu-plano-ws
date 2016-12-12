@@ -5,7 +5,7 @@ import Q from 'q';
 import _ from 'lodash';
 
 var MedicalSpecialtySchema = new mongoose.Schema({
-	_id: { type: String, required: true },
+	_id: { type: Number, required: true },
 	name: String,
 }, { timestamps: true });
 
