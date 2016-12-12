@@ -23,17 +23,7 @@ var providers = db.datasus_providers.aggregate(
           }
       }
     }
-  ],
-
-  // Options
-  {
-    cursor: {
-      batchSize: 50
-    }
-  }
-
-  // Created with 3T MongoChef, the GUI for MongoDB - http://3t.io/mongochef
-
+  ]
 );
 
 providers.forEach(function (provider) {
@@ -43,12 +33,12 @@ providers.forEach(function (provider) {
 	provider.healthPlans = produtos_hospitais.map(function(prod_hosp) {
 	  healthPlan = {"plan" : { "cod": String(prod_hosp.REG_PRODUTO), "operator" : NumberInt(prod_hosp.REG_OPERADORA)}};
 	  healthPlan.services = [];
-	  if(prod_hosp.PRONTO_SOCORRO && prod_hosp.PRONTO_SOCORRO == "Sim") {
+	  if(prod_hosp.PRONTO_SOCORRO && prod_hosp.PRONTO_SOCORRO.toUpperCase() == "SIM") {
 	    healthPlan.services.push("pronto-socorro");
 	  }
 	  
 	  return healthPlan;
 	});
 	
-	db.providers_test.update({"_id" : provider._id}, provider, true);
+	db.providers_test.update({"_id" : NumberInt(provider._id)}, provider, true);
 });

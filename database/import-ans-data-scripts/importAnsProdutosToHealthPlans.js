@@ -1,4 +1,4 @@
-var produtos = db.ans_produtos.find({ "COMERCIALIZACAO": "Liberada" }).noCursorTimeout();
+var produtos = db.ans_produtos.find({ $and: [ { "COMERCIALIZACAO": "Liberada" }, { "ABRANGENCIA_GEOGRAFICA": "Nacional" } ] }).noCursorTimeout();
 
 contractTypes = {
 		"Individual ou familiar" : "individual",
@@ -9,9 +9,8 @@ contractTypes = {
 };
 
 produtos.forEach(function(produto) {
-  var healthPlan = { 
-    "_id.cod" : String(produto.REG_PRODUTO), 
-    "_id.operator" : NumberInt(produto.REG_OPERADORA), 
+  
+  var healthPlan = { "_id" : {"cod" : String(produto.REG_PRODUTO), "operator" : NumberInt(produto.REG_OPERADORA)}, 
     "name" : produto.NOME_PRODUTO, 
     "moderatorFactor" : (produto.FATOR_MODERADOR.toLowerCase() == "sim" ? true : false), 
     "coverageAreaType" : produto.ABRANGENCIA_GEOGRAFICA.toLowerCase().replace(" ", "-"), 
@@ -66,6 +65,9 @@ produtos.forEach(function(produto) {
   if(produto.TIPO_CONTRATACAO) {
     healthPlan.contractType = contractTypes[produto.TIPO_CONTRATACAO];
   }
+  
+  db.healthplans_test.update( { _id : healthPlan._id } , healthPlan , true );
+  
   // Coverage Area
   var coverage = {};
   if(produto.AREA_GEOGRAFICA_ATUACAO && produto.AREA_GEOGRAFICA_ATUACAO != "Nacional") {
@@ -80,9 +82,7 @@ produtos.forEach(function(produto) {
       coverage.cities = [];
       coverage.cities.push(cidadeEstado[0].replace(" ", "-"))
     }
+    db.healthplans_test.update({ _id : healthPlan._id }, {"$addToSet":{coverageArea: coverage}});
   }
-  
-  //db.healthplans_test.update( { _id : healthPlan._id } , healthPlan , true );
-  db.healthplans_test.update(healthPlan, {"$addToSet":{coverageArea: coverage}} , true );
 });
 

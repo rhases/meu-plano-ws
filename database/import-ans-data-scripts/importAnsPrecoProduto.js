@@ -44,5 +44,5 @@ produtos_precos.forEach(function (produto_precos) {
 		maxPrice[map[value.faixa]] = Number(price); 	 
 	});
 	var id = { "cod": String(produto_precos._id.cod), "operator" : NumberInt(produto_precos._id.operator)}
-	db.healthplans_test.update({"_id": id}, {$set : {'maxPrice': maxPrice} }, true);
+	db.healthplans_test.update({"_id": id}, {$set : {'maxPrice': maxPrice} });
 });
