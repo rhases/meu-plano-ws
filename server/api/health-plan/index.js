@@ -15,13 +15,13 @@ router.get('/:id', controller.show);
 
 
 /* Get the proposal params and finds plans the result */
-// router.get('/state/:state', controller.findByCityStateAndOperator);
-// router.get('/state/:state/city/:city', controller.findByCityStateAndOperator);
-// router.get('/state/:state/city/:city/operator/:operator', controller.findByCityStateAndOperator);
+router.get('/state/:state', controller.findByCityStateAndOperator);
+router.get('/state/:state/city/:city', controller.findByCityStateAndOperator);
+router.get('/state/:state/city/:city/operator/:operator', controller.findByCityStateAndOperator);
 
-router.get('/state/:state', controller.index);
-router.get('/state/:state/city/:city', controller.index);
-router.get('/state/:state/city/:city/operator/:operator', controller.index);
+// router.get('/state/:state', controller.index);
+// router.get('/state/:state/city/:city', controller.index);
+// router.get('/state/:state/city/:city/operator/:operator', controller.index);
 
 
 module.exports = router;
