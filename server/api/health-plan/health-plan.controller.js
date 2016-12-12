@@ -126,7 +126,7 @@ export function destroy(req, res) {
 export function findByCityStateAndOperator(req, res, next) {
 	logger.debug("Finding health plans... " + JSON.stringify(req.params));
 
-	prepareQueryByCityStateAndTag(req.params).exec()
+	prepareQueryByCityStateAndOperator(req.params).exec()
         .then(isEnabledArrayType(res))
 		.then(respondWithResult(res))
 		.catch(handleError(res))
@@ -134,7 +134,7 @@ export function findByCityStateAndOperator(req, res, next) {
 }
 
 // ------------------------------------------------------------------------------
-function prepareQueryByCityStateAndTag(params) {
+function prepareQueryByCityStateAndOperator(params) {
 	if (!params.state)
 		return;
 
