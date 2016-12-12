@@ -145,9 +145,9 @@ function prepareQueryByCityStateAndTag(params) {
 
     return HealthPlan.find(_.merge(match, {
 		"$or": [
-			{ "restrictions.geographic": { "$exists": false } },
+			{ "coverageArea": { "$exists": false } },
 			{
-				"restrictions.geographic": {
+				"coverageArea": {
 					"$elemMatch": {
 						"$or": [
 							{ "state": { "$exists": false }},
