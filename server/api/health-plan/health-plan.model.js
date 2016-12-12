@@ -17,7 +17,7 @@ var HealthPlanSchema = new mongoose.Schema({
 	moderatorFactor: Boolean, /* coopart */
 	contractType: { type: String, enum: [ 'individual', 'coletivo-empresarial', 'coletivo-adesao' ] }, /* indiv, ce, ca */
 
-	coverageAreaType: { type: String, enum: [ 'nacional', 'estadual', 'municipal', 'grupo-de-estados', 'grupo-de-municipios' ], /*abrangencia geografica TODO: enum [Nacional, Estadual, Municipal, Grupo de Estados, Grupo de Municipios]*/
+	coverageAreaType: { type: String, enum: [ 'nacional', 'estadual', 'municipal', 'grupo-de-estados', 'grupo-de-municipios' ] }, /*abrangencia geografica TODO: enum [Nacional, Estadual, Municipal, Grupo de Estados, Grupo de Municipios]*/
 	coverageArea: [{ // this is a include. if
 		state: String,
 		cities: [ String ]
