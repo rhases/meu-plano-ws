@@ -28,7 +28,7 @@ var HealthProviderSchema = new mongoose.Schema({
     },
 	address:  AddressSchema,
 
-	type: { type: String, required: true },
+	type: { type: String, required: true, enum: [ 'hospital', 'clinic', 'laboratory' ] },
 
 	image: { type: String }, // link to a image
 	phone:  { type: String },

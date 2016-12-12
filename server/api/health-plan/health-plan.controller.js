@@ -63,33 +63,16 @@ function handleError(res, statusCode) {
   };
 }
 
-function isEnabledArrayType(res) {
-    return function(entity) {
-        return entity.filter(function(obj) {
-            return obj.enabled;
-        });
-    }
-}
-
-function isEnabled(res) {
-    return function(entity) {
-        if (entity.enabled)
-            return entity;
-
-        return null;
-    }
-}
-
 // Gets a list of HealthPlans
 export function index(req, res) {
-  return HealthPlan.find().populate('operator').exec()
+  return HealthPlan.find().populate('_id.operator').exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 // Gets a single HealthPlan from the DB
 export function show(req, res) {
-  return HealthPlan.findById(req.params.id).populate('operator').exec()
+  return HealthPlan.findById(req.params.id).populate('_id.operator').exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -127,7 +110,6 @@ export function findByCityStateAndOperator(req, res, next) {
 	logger.debug("Finding health plans... " + JSON.stringify(req.params));
 
 	prepareQueryByCityStateAndOperator(req.params).exec()
-        .then(isEnabledArrayType(res))
 		.then(respondWithResult(res))
 		.catch(handleError(res))
 		.done();
@@ -135,16 +117,13 @@ export function findByCityStateAndOperator(req, res, next) {
 
 // ------------------------------------------------------------------------------
 function prepareQueryByCityStateAndOperator(params) {
-	if (!params.state)
-		return;
-
 	var match = {};
 
 	if (params.operator)
-		match['_id.operator'] = params.operator;
+		match['_id.operator'] = parseInt(params.operator);
 
-    return HealthPlan.find(_.merge(match, {
-		"$or": [
+	if (params.state) {
+		match['$or'] = [
 			{ "coverageArea": { "$exists": false } },
 			{
 				"coverageArea": {
@@ -168,9 +147,10 @@ function prepareQueryByCityStateAndOperator(params) {
 					}
 				}
 		    }
-		]
-	}))
-	.populate('operator');
+		];
+	}
+
+    return HealthPlan.find(match).populate('_id.operator');
 }
 
 

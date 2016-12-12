@@ -11,8 +11,6 @@ var HealthPlanSchema = new mongoose.Schema({
 	name: { type: String, required: true },
 	status: { type: String, enum: [ 'suspenso', 'ativo-comercializacao-suspensa', 'liberado' ], required: true }, /*Comercializacao: suspensa, ativa com comercialização suspensa, liberada*/
 
-	operator:  { type: mongoose.Schema.Types.Number, ref: 'Operator' },
-
 	coverageTypes: [ { type: String, enum: [ 'ambulatorial', 'hospitalar', 'obstetricia', 'odontologico' ] }],
 	accomodation: { type: String, enum: [ 'individual', 'coletiva' ] }, /* s/acomodacao, coletivo, indiv */
 	moderatorFactor: Boolean, /* coopart */
