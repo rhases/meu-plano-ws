@@ -1,18 +1,18 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/providers              ->  index
- * POST    /api/providers              ->  create
- * GET     /api/providers/:id          ->  show
- * PUT     /api/providers/:id          ->  update
- * DELETE  /api/providers/:id          ->  destroy
+ * GET     /api/health-insurance/medical-specialties              ->  index
+ * POST    /api/health-insurance/medical-specialties              ->  create
+ * GET     /api/health-insurance/medical-specialties/:id          ->  show
+ * PUT     /api/health-insurance/medical-specialties/:id          ->  update
+ * DELETE  /api/health-insurance/medical-specialties/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-import Provider from './provider.model';
+import MedicalSpecialty from './medical-specialty.model';
 
-var logger = require('log4js').getLogger('provider.appointment');
+var logger = require('log4js').getLogger('controller.medical-specialty');
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -25,7 +25,9 @@ function respondWithResult(res, statusCode) {
 
 function saveUpdates(updates) {
   return function(entity) {
-    var updated = _.merge(entity, updates);
+	if (!entity)
+	  return;
+    var updated = entity.merge(updates);
     return updated.save()
       .then(updated => {
         return updated;
@@ -61,73 +63,44 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Providers
+// Gets a list of MedicalSpecialties
 export function index(req, res) {
-  return Provider.find()
-    .exec()
+  return MedicalSpecialty.find().populate('healthPlans').exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Provider from the DB
+// Gets a single MedicalSpecialty from the DB
 export function show(req, res) {
-  return Provider.findById(req.params.id)
-    .exec()
+  return MedicalSpecialty.findById(req.params.id).populate('healthPlans').exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Provider in the DB
+// Creates a new MedicalSpecialty in the DB
 export function create(req, res) {
-  return Provider.create(req.body)
+  return MedicalSpecialty.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Provider in the DB
+// Updates an existing MedicalSpecialty in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  return Provider.findById(req.params.id).exec()
+  return MedicalSpecialty.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Provider from the DB
+// Deletes a MedicalSpecialty from the DB
 export function destroy(req, res) {
-  return Provider.findById(req.params.id).exec()
+  return MedicalSpecialty.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
-}
-
-
-export function findByParams(req, res, next) {
-	return prepareQuery(req.params)
-	.exec()
-	.then(respondWithResult(res))
-	.catch(handleError(res));
-}
-
-function prepareQuery(params, handler) {
-	var match = {};
-	if (params.state) {
-		match['address.state'] = params.state;
-	}
-	if (params.city) {
-		match['address.city'] = params.city;
-	}
-	if (params.type) {
-		match['type'] = params.type;
-	}
-	if (params.plan) {
-		match['healthPlans'] = { $elemMatch: {"plan": params.plan } };
-	}
-
-	logger.trace("The match is " + JSON.stringify(match));
-	return Provider.find(match);
 }

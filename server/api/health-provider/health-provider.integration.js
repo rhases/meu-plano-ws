@@ -7,33 +7,33 @@ var newProvider;
 
 describe('Provider API:', function() {
 
-  describe('GET /api/providers', function() {
-    var providers;
+  describe('GET /api/health-providers', function() {
+    var healthProviders;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/providers')
+        .get('/api/health-providers')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          providers = res.body;
+          healthProviders = res.body;
           done();
         });
     });
 
     it('should respond with JSON array', function() {
-      providers.should.be.instanceOf(Array);
+      healthProviders.should.be.instanceOf(Array);
     });
 
   });
 
-  describe('POST /api/providers', function() {
+  describe('POST /api/health-providers', function() {
     beforeEach(function(done) {
       request(app)
-        .post('/api/providers')
+        .post('/api/health-providers')
         .send({
           name: 'New Provider',
           info: 'This is the brand new provider!!!'
@@ -56,12 +56,12 @@ describe('Provider API:', function() {
 
   });
 
-  describe('GET /api/providers/:id', function() {
+  describe('GET /api/health-providers/:id', function() {
     var provider;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/providers/' + newProvider._id)
+        .get('/api/health-providers/' + newProvider._id)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -84,12 +84,12 @@ describe('Provider API:', function() {
 
   });
 
-  describe('PUT /api/providers/:id', function() {
+  describe('PUT /api/health-providers/:id', function() {
     var updatedProvider;
 
     beforeEach(function(done) {
       request(app)
-        .put('/api/providers/' + newProvider._id)
+        .put('/api/health-providers/' + newProvider._id)
         .send({
           name: 'Updated Provider',
           info: 'This is the updated provider!!!'
@@ -116,11 +116,11 @@ describe('Provider API:', function() {
 
   });
 
-  describe('DELETE /api/providers/:id', function() {
+  describe('DELETE /api/health-providers/:id', function() {
 
     it('should respond with 204 on successful removal', function(done) {
       request(app)
-        .delete('/api/providers/' + newProvider._id)
+        .delete('/api/health-providers/' + newProvider._id)
         .expect(204)
         .end((err, res) => {
           if (err) {
@@ -132,7 +132,7 @@ describe('Provider API:', function() {
 
     it('should respond with 404 when provider does not exist', function(done) {
       request(app)
-        .delete('/api/providers/' + newProvider._id)
+        .delete('/api/health-providers/' + newProvider._id)
         .expect(404)
         .end((err, res) => {
           if (err) {

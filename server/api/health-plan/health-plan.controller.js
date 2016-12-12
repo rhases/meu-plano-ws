@@ -123,10 +123,10 @@ export function destroy(req, res) {
 }
 
 
-export function findByCityStateAndTag(req, res, next) {
+export function findByCityStateAndOperator(req, res, next) {
 	logger.debug("Finding health plans... " + JSON.stringify(req.params));
 
-	prepareQueryByCityStateAndTag(req.params).exec()
+	prepareQueryByCityStateAndOperator(req.params).exec()
         .then(isEnabledArrayType(res))
 		.then(respondWithResult(res))
 		.catch(handleError(res))
@@ -134,15 +134,20 @@ export function findByCityStateAndTag(req, res, next) {
 }
 
 // ------------------------------------------------------------------------------
-function prepareQueryByCityStateAndTag(params) {
+function prepareQueryByCityStateAndOperator(params) {
 	if (!params.state)
 		return;
 
-    return HealthPlan.find({
+	var match = {};
+
+	if (params.operator)
+		match['_id.operator'] = params.operator;
+
+    return HealthPlan.find(_.merge(match, {
 		"$or": [
-			{ "restrictions.geographic": { "$exists": false } },
+			{ "coverageArea": { "$exists": false } },
 			{
-				"restrictions.geographic": {
+				"coverageArea": {
 					"$elemMatch": {
 						"$or": [
 							{ "state": { "$exists": false }},
@@ -164,34 +169,10 @@ function prepareQueryByCityStateAndTag(params) {
 				}
 		    }
 		]
-	})
-	.populate (
-		{
-			path: 'planTables',
-			match: preparePlanTableQuery(params)
-		}
-	)
-	.populate('Operator');
+	}))
+	.populate('operator');
 }
 
-function preparePlanTableQuery(params) {
-	var match = {};
-
-	// var totalLifes = calculateTotalLifes(params.lifes);
-	// if(totalLifes > 0) {
-	// 	match["requirements.minLifes"] = { $lte: totalLifes };
-	// 	match["requirements.maxLifes"] = { $gte: totalLifes };
-	// }
-
-	if(params.tags) {
-		var tags = params.tags.replace(/-/g, ' ').split(',');
-		if(tags && tags != "undefined") {
-			match["requirements.tags"] = { $in: tags };
-		}
-	}
-
-	return match;
-}
 
 function calculateTotalLifes(lifes) {
 	var totalLifes = 0;

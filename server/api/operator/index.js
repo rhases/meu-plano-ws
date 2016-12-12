@@ -12,4 +12,6 @@ router.get('/:id', controller.show);
 //router.patch('/:id', controller.update);
 //router.delete('/:id', controller.destroy);
 
+router.get('/:state/:city', controller.index); // TODO: Fazer o find by state and city
+
 module.exports = router;

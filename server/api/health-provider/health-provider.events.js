@@ -5,7 +5,7 @@
 'use strict';
 
 import {EventEmitter} from 'events';
-import Provider from './provider.model';
+import Provider from './health-provider.model';
 var ProviderEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)

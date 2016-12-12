@@ -4,21 +4,22 @@ import mongoose from 'mongoose';
 import _ from 'lodash';
 
 import Q from 'q';
+import HealthPlanIdSchema from './health-plan-id.schema';
 
 var HealthPlanSchema = new mongoose.Schema({
-	_id: { type: Number, required: true }, //ANS Cod
+	_id: { type: HealthPlanIdSchema, required: true }, //ANS Cod
 	name: { type: String, required: true },
-	status: String, /*Comercializacao: suspensa, ativa com comercialização suspensa, liberada*/
+	status: { type: String, enum: [ 'suspenso', 'ativo-comercializacao-suspensa', 'liberado' ], required: true }, /*Comercializacao: suspensa, ativa com comercialização suspensa, liberada*/
 
 	operator:  { type: mongoose.Schema.Types.Number, ref: 'Operator' },
 
-	coverageTypes: [String], /*ambulatorial, hospitalar, odonto ... TODO: enum*/
-	accomodation:String, /*s/acomodacao, coletivo, indiv */
-	moderatorFactor: Boolean, /*coopart*/
-	contractType:String,/*indiv, ce, ca*/
+	coverageTypes: [ { type: String, enum: [ 'ambulatorial', 'hospitalar', 'obstetricia', 'odontologico' ] }],
+	accomodation: { type: String, enum: [ 'individual', 'coletiva' ] }, /* s/acomodacao, coletivo, indiv */
+	moderatorFactor: Boolean, /* coopart */
+	contractType: { type: String, enum: [ 'individual', 'coletivo-empresarial', 'coletivo-adesao' ] }, /* indiv, ce, ca */
 
-	coverageAreaType: String, /*abrangencia geografica TODO: enum [Nacional, Estadual, Municipal, Grupo de Estados, Grupo de Municipios]*/
-	coverageArea: [{ // this is a include. if
+	coverageAreaType: { type: String, enum: [ 'nacional', 'estadual', 'municipal', 'grupo-de-estados', 'grupo-de-municipios' ] }, /*abrangencia geografica TODO: enum [Nacional, Estadual, Municipal, Grupo de Estados, Grupo de Municipios]*/
+	coverageArea: [{ // this is a include. if not defined this is national
 		state: String,
 		cities: [ String ]
 	}],
@@ -36,6 +37,7 @@ var HealthPlanSchema = new mongoose.Schema({
 		a59orMore: { type: Number, required: true},
 	}
 });
+
 
 /**
  * Methods
