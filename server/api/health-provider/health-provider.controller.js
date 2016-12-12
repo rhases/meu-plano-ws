@@ -132,7 +132,7 @@ export function findByMedicalSpecialty(req, res, next) {
 
 function buildQuery(params) {
 	var match = {};
-	
+
 	if (params.state) {
 		match['address.state'] = params.state;
 	}
@@ -143,7 +143,7 @@ function buildQuery(params) {
 		match['type'] = params.type;
 	}
 	if (params.plan) {
-		match['healthPlans'] = { $elemMatch: {"plan": params.plan } };
+		match['healthPlans'] = { $elemMatch: {"plan.operator":params.planOperatorId, "plan.cod": params.planCodId } };
 	}
 
 	return match;
