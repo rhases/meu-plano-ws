@@ -72,7 +72,8 @@ export function index(req, res) {
 
 // Gets a single HealthPlan from the DB
 export function show(req, res) {
-  return HealthPlan.findById(req.params.id).populate('_id.operator').exec()
+  return HealthPlan.findById({ operator: req.params.operatorId, cod: req.params.codId })
+  	.populate('_id.operator').exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
