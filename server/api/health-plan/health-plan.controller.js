@@ -141,7 +141,7 @@ function prepareQueryByCityStateAndOperator(params) {
 	var match = {};
 
 	if (params.operator)
-		match['operator'] = params.operator;
+		match['_id.operator'] = params.operator;
 
     return HealthPlan.find(_.merge(match, {
 		"$or": [
