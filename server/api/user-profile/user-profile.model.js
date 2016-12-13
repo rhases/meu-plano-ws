@@ -9,13 +9,12 @@ var UserProfileSchema = new mongoose.Schema({
 	_id: { type: String, required: true }, // email
 	state: {type: String, lowercase: true, enum: brazilianInfos.allStateCodes()},
 	city: {type: String, lowercase: true, enum: brazilianInfos.allCityCodes()},
+
 	name: { type: String },
-	hasHealthPlan: { type: Boolean },
-	healthPlan: {
-		// Procedure: { type: String, trim: true, lowercase: true }, //, enum: ['amil', 'bradesco', 'central-nacional-unimed', 'saudesim', 'seguros-unimed', 'sulamerica']
-		name: { type: String },
-		number: { type: String },
-	}
+	birthdate { type: Date },
+
+	healthPlan: { type: HealthPlanIdSchema, ref: 'HealthPlan' },
+	healthPlanCard: { type: String }
 });
 
 /**
