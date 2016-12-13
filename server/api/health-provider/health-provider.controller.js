@@ -10,6 +10,8 @@
 'use strict';
 
 import _ from 'lodash';
+import brazilianInfos from 'brazilian-cities';
+
 import HealthProvider from './health-provider.model';
 
 var logger = require('log4js').getLogger('health-provider.appointment');
@@ -133,11 +135,18 @@ export function findByMedicalSpecialty(req, res, next) {
 function buildQuery(params) {
 	var match = {};
 
+	var state = brazilianInfos.getStateByCod(params.state);
+	var city = brazilianInfos.getCityByCod(state, params.city);
+
+	function normalize(label) { return _.deburr(label).toUpperCase(); }
+	function normalizeState(state) { return normalize(state.cod) }
+	function normalizeCity(city) { return normalize(city.label) }
+
 	if (params.state) {
-		match['address.state'] = params.state;
+		match['address.state'] = normalizeState(state);
 	}
 	if (params.city) {
-		match['address.city'] = params.city;
+		match['address.city'] = normalizeCity(city);
 	}
 	if (params.type) {
 		match['type'] = params.type;

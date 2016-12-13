@@ -7,7 +7,7 @@ import _ from 'lodash';
 var ProcedureSchema = new mongoose.Schema({
 	_id: { type: Number, required: true }, //ANS Cod
 	mainDescription: String,
-	coverageTypes: [], // ondonto, ambul, apac, obst TODO: enum*/
+	coverageTypes: [ { type: String, enum: [ 'ambulatorial', 'hospitalar', 'obstetricia', 'odontologico' ] } ],
 	descriptions: [ { type: String } ], // usado para buscar
 }, { timestamps: true });
 
