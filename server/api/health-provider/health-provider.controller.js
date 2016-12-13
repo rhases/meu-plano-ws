@@ -108,31 +108,53 @@ export function destroy(req, res) {
 }
 
 export function findByParams(req, res, next) {
-	return HealthProvider.find(buildQuery(req.params))
-		.exec()
-		.then(respondWithResult(res))
-		.catch(handleError(res));
+	HealthPlan.findById({ "operator": params.planOperatorId, "cod": params.planCodId })
+		.then(function(healthPlan) {
+			if(!healthPlan)
+				return;
+
+			var match = buildQuery(healthPlan, req.params);
+			return HealthProvider.find(match)
+				.limit(20)
+				.exec()
+				.then(respondWithResult(res))
+				.catch(handleError(res));
+		})
 }
 
 export function findByProcedure(req, res, next) {
-	var match = buildQuery(req.params);
-	match['healthPlans.procedures'] = req.params.procedure;
-	return HealthProvider.find(match)
-		.exec()
-		.then(respondWithResult(res))
-		.catch(handleError(res));
+	HealthPlan.findById({ "operator": params.planOperatorId, "cod": params.planCodId })
+		.then(function(healthPlan) {
+			if(!healthPlan)
+				return;
+
+			var match = buildQuery(healthPlan, req.params);
+			match['healthPlans.procedures'] = req.params.procedure;
+			return HealthProvider.find(buildQuery(healthPlan, req.params))
+				.limit(20)
+				.exec()
+				.then(respondWithResult(res))
+				.catch(handleError(res));
+		})
 }
 
 export function findByMedicalSpecialty(req, res, next) {
-	var match = buildQuery(req.params);
-	match['healthPlans.medicalSpecialties'] = req.params.medicalSpecialty;
-	return HealthProvider.find(match)
-		.exec()
-		.then(respondWithResult(res))
-		.catch(handleError(res));
+	HealthPlan.findById({ "operator": params.planOperatorId, "cod": params.planCodId })
+		.then(function(healthPlan) {
+			if(!healthPlan)
+				return;
+
+			var match = buildQuery(healthPlan, req.params);
+			match['healthPlans.medicalSpecialties'] = req.params.medicalSpecialty;
+			return HealthProvider.find(buildQuery(healthPlan, req.params))
+				.limit(20)
+				.exec()
+				.then(respondWithResult(res))
+				.catch(handleError(res));
+		})
 }
 
-function buildQuery(params) {
+function buildQuery(healthPlan, params) {
 	var match = {};
 
 	var state = brazilianInfos.getStateByCod(params.state);
@@ -151,9 +173,8 @@ function buildQuery(params) {
 	if (params.type) {
 		match['type'] = params.type;
 	}
-	if (params.plan) {
-		match['healthPlans'] = { $elemMatch: {"plan.operator":params.planOperatorId, "plan.cod": params.planCodId } };
-	}
+
+	match['_id'] = { '$in': healthPlan.healthProviders.map(function(element) { return element.provider; }) }
 
 	return match;
 }

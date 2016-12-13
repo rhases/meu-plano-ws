@@ -33,7 +33,14 @@ var HealthPlanSchema = new mongoose.Schema({
 		a49to53: { type: Number, required: true},
 		a54to58: { type: Number, required: true},
 		a59orMore: { type: Number, required: true},
-	}
+	},
+
+	healthProviders: [{
+		services: [{type: String, enum: [ 'hospitalar', 'ambulatorial', 'pronto-socorro', 'maternidade' ] }], /*H, M, PS, A*/
+		medicalSpecialties: [], //consultas médicas
+		procedures: [],
+		provider: { type: Number, ref: 'HealthProvider' }
+	}],
 });
 
 

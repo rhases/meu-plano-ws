@@ -7,28 +7,28 @@ var newUserProfile;
 
 describe('UserProfile API:', function() {
 
-  describe('GET /api/user-profiles', function() {
-    var userProfiles;
-
-    beforeEach(function(done) {
-      request(app)
-        .get('/api/user-profiles')
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          if (err) {
-            return done(err);
-          }
-          userProfiles = res.body;
-          done();
-        });
-    });
-
-    it('should respond with JSON array', function() {
-      userProfiles.should.be.instanceOf(Array);
-    });
-
-  });
+  // describe('GET /api/user-profiles', function() {
+  //   var userProfiles;
+  //
+  //   beforeEach(function(done) {
+  //     request(app)
+  //       .get('/api/user-profiles')
+  //       .expect(200)
+  //       .expect('Content-Type', /json/)
+  //       .end((err, res) => {
+  //         if (err) {
+  //           return done(err);
+  //         }
+  //         userProfiles = res.body;
+  //         done();
+  //       });
+  //   });
+  //
+  //   it('should respond with JSON array', function() {
+  //     userProfiles.should.be.instanceOf(Array);
+  //   });
+  //
+  // });
 
   describe('POST /api/user-profiles', function() {
     beforeEach(function(done) {

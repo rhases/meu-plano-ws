@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import Q from 'q';
 import _ from 'lodash';
 import * as brazilianInfos from 'brazilian-cities';
+import HealthPlanIdSchema from '../health-plan/health-plan-id.schema';
 
 var UserProfileSchema = new mongoose.Schema({
 	_id: { type: String, required: true }, // email
@@ -11,7 +12,7 @@ var UserProfileSchema = new mongoose.Schema({
 	city: {type: String, lowercase: true, enum: brazilianInfos.allCityCodes()},
 
 	name: { type: String },
-	birthdate { type: Date },
+	birthdate: { type: Date },
 
 	healthPlan: { type: HealthPlanIdSchema, ref: 'HealthPlan' },
 	healthPlanCard: { type: String }

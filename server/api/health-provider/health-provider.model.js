@@ -16,7 +16,7 @@ var AddressSchema = new mongoose.Schema({
 }, { _id: false });
 
 var HealthProviderSchema = new mongoose.Schema({
-	_id: {type:Number}, // cnes
+	_id: { type:Number }, // cnes
 
 	name: { type: String, required: true },
 
@@ -36,12 +36,12 @@ var HealthProviderSchema = new mongoose.Schema({
 	rate: Number,
 
 	procedures: [{ type: mongoose.Schema.Types.Number, ref: 'Procedure' }],
-	healthPlans: [{
-		services: [{type: String, enum: [ 'hospitalar', 'ambulatorial', 'pronto-socorro', 'maternidade' ] }], /*H, M, PS, A*/
-		medicalSpecialties: [], //consultas médicas
-		procedures: [],
-		plan: { type: HealthPlanIdSchema, ref: 'HealthPlan' }
-	}],
+	// healthPlans: [{
+	// 	services: [{type: String, enum: [ 'hospitalar', 'ambulatorial', 'pronto-socorro', 'maternidade' ] }], /*H, M, PS, A*/
+	// 	medicalSpecialties: [], //consultas médicas
+	// 	procedures: [],
+	// 	plan: { type: HealthPlanIdSchema, ref: 'HealthPlan' }
+	// }],
 
 }, { autoIndex: true, toObject: { virtuals: true }, toJSON: { virtuals: true }});
 

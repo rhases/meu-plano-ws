@@ -34,15 +34,15 @@ describe('UserProfile API Router:', function() {
     userProfileIndex.should.equal(routerStub);
   });
 
-  describe('GET /api/user-profiles', function() {
-
-    it('should route to userProfile.controller.index', function() {
-      routerStub.get
-        .withArgs('/', 'userProfileCtrl.index')
-        .should.have.been.calledOnce;
-    });
-
-  });
+  // describe('GET /api/user-profiles', function() {
+  //
+  //   it('should route to userProfile.controller.index', function() {
+  //     routerStub.get
+  //       .withArgs('/', 'userProfileCtrl.index')
+  //       .should.have.been.calledOnce;
+  //   });
+  //
+  // });
 
   describe('GET /api/user-profiles/:id', function() {
 
