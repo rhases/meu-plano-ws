@@ -9,10 +9,10 @@ var router = express.Router();
 
 router.get('/:id', controller.show);
 
-router.get('/:plan/:state/:city/:type', controller.findByParams);
+router.get('/:planOperatorId-:planCodId/:state/:city/:type', controller.findByParams);
 
-router.get('/:plan/:state/:city/procedure/:procedure', controller.findByProcedure);
-router.get('/:plan/:state/:city/medical-specialty/:medicalSpecialty', controller.findByMedicalSpecialty);
+router.get('/:planOperatorId-:planCodId/:state/:city/procedure/:procedure', controller.findByProcedure);
+router.get('/:planOperatorId-:planCodId/:state/:city/medical-specialty/:medicalSpecialty', controller.findByMedicalSpecialty);
 
 //router.post('/', controller.create);
 //router.put('/:id', controller.update);

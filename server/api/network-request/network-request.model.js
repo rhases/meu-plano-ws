@@ -5,7 +5,8 @@ import Q from 'q';
 import _ from 'lodash';
 
 var NetworkRequestSchema = new mongoose.Schema({
-	user: { type: String, required: true },
+	// user: { type: String, required: true },
+	user: { type: String, ref: 'UserProfile' },
 
 	medicalSpecialty: { type: Number },
 	procedure: { type: Number },
