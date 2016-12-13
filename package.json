@@ -2,6 +2,7 @@
   "name": "ans-ws",
   "version": "0.0.1",
   "main": "server/app.js",
+  "license": "CC-BY-4.0",
   "dependencies": {
     "babel-runtime": "^5.8.20",
     "bluebird": "^3.3.3",
